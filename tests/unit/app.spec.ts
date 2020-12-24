@@ -1,11 +1,11 @@
 import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/HelloWorld.vue";
+import VueyePhoneInput from "@/components/VueyePhoneInput";
 
 describe("HelloWorld.vue", () => {
   it("renders props.msg when passed", () => {
-    const msg = "new message";
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg }
+    const msg = "salam";
+    const wrapper = shallowMount(VueyePhoneInput, {
+     
     });
     expect(wrapper.text()).toMatch(msg);
   });

@@ -1,27 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="w-full h-full p-16">
+    <label for="#phone">
+      <div class="py-2 text-gray-600">Your phone number :</div>
+      <vueye-phone-input v-model="phone" :outlined="true" id="phone" status="succes" />
+    </label>
+
+    <div class="max-w-md py-8">
+      <code class="whitespace-pre-line">
+        {{ phone }}
+      </code>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import VueyePhoneInput from "./components/VueyePhoneInput";
 
 export default defineComponent({
-  name: "App",
+  name: "app",
   components: {
-    HelloWorld
-  }
+    VueyePhoneInput,
+  },
+  data() {
+    return {
+      phone: {
+        number: "",
+        nationalNumber: "",
+      },
+    };
+  },
+  methods: {
+   
+  },
 });
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
