@@ -84,7 +84,7 @@ Thanks to the maintainers of :
 
 - [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js)
 - [restcountries](https://restcountries.eu/)
-- [ip-api](http://ip-api.com)
+- [ip2c](https://ip2c.org/s)
 -
 
 Coded with  ❤ by Boussadjra Brahim

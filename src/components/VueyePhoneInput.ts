@@ -138,9 +138,7 @@ let outline=this.outlined ? 'border-2 '+borderColor : 'bg-white'
 
 
                     const phoneNumber = parsePhoneNumber(`+${this.selectedCountry?.callCode}${e.target.value}`)
-                    console.log('-------phoneNumber----------')
-                    console.log(phoneNumber)
-                    console.log('--------------------')
+  
 
 
                     this.$emit('update:modelValue', {
@@ -168,13 +166,13 @@ let outline=this.outlined ? 'border-2 '+borderColor : 'bg-white'
             this.showDropdown = this.$el.contains(e.target)
 
         })
-        fetch("http://ip-api.com/json").then(res => {
-            return res.json()
+        fetch("https://ip2c.org/s").then(res => {
+            return res.text()
         }).then(data => {
 
 
             this.selectedCountry = this.countries.find((country) => {
-                return data.countryCode === country.code;
+                return data.split(';')[1] === country.code;
             })
         })
     },
