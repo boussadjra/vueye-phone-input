@@ -1,7 +1,7 @@
 {
   "name": "vueye-phone-input",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "./build/vueye-phone-input.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
