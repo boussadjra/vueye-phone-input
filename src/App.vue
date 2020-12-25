@@ -1,15 +1,17 @@
 <template>
-  <div class="w-full h-full p-16">
+  <div class="vpi-w-full vpi-h-full vpi-p-16">
+   <div class="vpi-p-4 vpi-shadow-md vpi-max-w-md">
     <label for="#phone">
-      <div class="py-2 text-gray-600">Your phone number :</div>
-      <vueye-phone-input v-model="phone" :outlined="true" id="phone" status="succes" />
+      <div class="vpi-py-2 vpi-text-gray-600">Your phone number :</div>
+      <vueye-phone-input placeholder="Insert phone number" v-model="phone" raised  id="phone"  />
     </label>
 
-    <div class="max-w-md py-8">
-      <code class="whitespace-pre-line">
+    <div class="vpi-max-w-md vpi-py-8">
+      <code class="vpi-whitespace-pre-line">
         {{ phone }}
       </code>
     </div>
+   </div>
   </div>
 </template>
 
@@ -24,12 +26,15 @@ export default defineComponent({
   },
   data() {
     return {
+      status:'',
       phone: {
         number: "",
         nationalNumber: "",
+        isValid:false
       },
     };
   },
+
   methods: {
    
   },

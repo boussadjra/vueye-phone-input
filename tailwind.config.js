@@ -1,4 +1,5 @@
 module.exports = {
+  prefix:'vpi-',
   purge: [
     "./src/**/*.html",
     "./src/**/*.vue",

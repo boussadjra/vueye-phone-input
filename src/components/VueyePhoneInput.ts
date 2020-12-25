@@ -1,7 +1,7 @@
 import { defineComponent, h, PropType } from "vue";
 import './style.scss'
 import countries from './countries'
-import parsePhoneNumber, { getCountries } from 'libphonenumber-js'
+import asYoutType, { getCountries, PhoneNumber } from 'libphonenumber-js'
 
 /*** interfaces */
 
@@ -14,14 +14,14 @@ interface ICountry {
     code: string
 }
 
-interface IPhoneNumber {
-    nationalNumber: number | string,
-    number: number | string,
+interface IPhoneNumber extends PhoneNumber {
+    // nationalNumber: number | string,
+    // number: number | string,
 
 }
 /****** constants */
-const dropdownClasses = ["absolute bg-white shadow-lg z-20 max-h-64 p-2  top-full mt-2 left-0 w-full overflow-y-auto"]
-
+const dropdownClasses = ["vpi-absolute vpi-bg-white vpi-shadow-lg z-20 vpi-max-h-64 vpi-p-2  vpi-top-full vpi-mt-2 vpi-left-0 vpi-w-full vpi-overflow-y-auto"]
+let shapes = ['vpi-rounded-none', 'vpi-rounded', 'vpi-rounded-full']
 export default defineComponent({
     name: 'vueye-phone-input',
     props: {
@@ -44,11 +44,17 @@ export default defineComponent({
         },
         status: {
             type: String as PropType<'success' | 'error' | ''>,
+            default: '',
+
+
+        },
+        placeholder: {
+            type: String,
             default: ''
 
         }
     },
-    emits: ['update:modelValue','blur','focus','click-dropdown','change-country'],
+    emits: ['update:modelValue', 'blur', 'focus', 'click-dropdown', 'change-country'],
     data() {
         return {
             countries,
@@ -58,22 +64,29 @@ export default defineComponent({
 
         }
     },
+    watch: {
+        status(val) {
+            if (!this.outlined) {
+                throw new Error("The status works only when the outlined prop is provided");
 
+            }
+        }
+    },
     computed: {
         wrapperClasses(): Array<string> {
-        let borderColor='border-gray-300'
+            let borderColor = 'vpi-border-gray-300'
 
 
 
 
-if(this.status==='success'){
-borderColor='border-green-500'
-}else if (this.status==='error'){
-    borderColor='border-red-500'
-}
+            if (this.status === 'success') {
+                borderColor = 'vpi-border-green-500'
+            } else if (this.status === 'error') {
+                borderColor = 'vpi-border-red-500'
+            }
 
-let outline=this.outlined ? 'border-2 '+borderColor : 'bg-white'
-            return [`flex ${this.raised ? 'shadow-md' : ''} ${this.shape} ${outline} relative  space-x-2 max-h-max   items-center max-w-md  min-w-sm py-2`]
+            let outline = this.outlined ? 'vpi-border-2 ' + borderColor : 'vpi-bg-white'
+            return [` vpi-flex ${this.raised ? 'vpi-shadow-md' : ''} vpi-${this.shape} ${outline} vpi-relative vpi- vpi-space-x-2 vpi-max-h-max vpi- vpi- vpi-items-center vpi-max-w-md vpi- vpi-min-w-sm vpi-py-2`]
 
         }
     },
@@ -82,14 +95,14 @@ let outline=this.outlined ? 'border-2 '+borderColor : 'bg-white'
 
         renderDropdown() {
             return h('div', {
-                class: 'flex p-2 flex items-center justify-center w-16',
+                class: 'vpi-flex vpi-p-2 vpi-flex vpi-items-center vpi-justify-center vpi-w-16',
 
-                onClick: (e:Event) => {
+                onClick: (e: Event) => {
                     this.showDropdown = !this.showDropdown
-                    this.$emit('click-dropdown',e,this.showDropdown)
+                    this.$emit('click-dropdown', e, this.showDropdown)
                 }
             }, [h('div', { class: ' ' }, [h('img',
-                { class: 'h-4 w-6 mr-2', src: this.selectedCountry?.flag }), this.showDropdown ? this.renderItems() : '']), this.renderCaret()])
+                { class: 'vpi-h-4 vpi-w-6 vpi-mr-2', src: this.selectedCountry?.flag }), this.showDropdown ? this.renderItems() : '']), this.renderCaret()])
         },
 
 
@@ -101,81 +114,95 @@ let outline=this.outlined ? 'border-2 '+borderColor : 'bg-white'
 
         renderItem(country: ICountry) {
             return h('li', {
-                class: 'p-1  flex space-x-2 items-center w-full text-blue-600 cursor-pointer hover:bg-blue-200',
+                class: ' vpi-p-1  vpi-flex vpi-space-x-2 vpi-items-center vpi-w-full vpi-text-blue-600 vpi-cursor-pointer hover:vpi-bg-blue-200',
                 onClick: (e: Event) => {
 
                     this.selectedCountry = country;
                     this.showDropdown = false
-                    this.$emit('change-country',e,this.selectedCountry)
+                    this.$emit('change-country', e, this.selectedCountry)
 
+                    const phoneNumber = asYoutType(`+${this.selectedCountry?.callCode}${this.modelValue?.nationalNumber}`)
+                    this.onInput(phoneNumber)
                 }
 
             }, [h('img',
-                { class: 'h-4 w-6 mr-2', src: country.flag }),
-            h('span', { class: 'px-2 mr-2 text-gray-600' }, `${country.name} (${country.nativeName}) `), `+${country.callCode}`])
+                { class: 'vpi-h-4 vpi-w-6 vpi-mr-2', src: country.flag }),
+            h('span', { class: 'vpi-px-2 vpi-mr-2 vpi-text-gray-600' }, `${country.name} (${country.nativeName}) `), `+${country.callCode}`])
         },
 
 
         renderInput() {
             return h('input', {
                 id: this.$attrs.id,
-                class: 'p-1 w-full min-w-md bg-transparent outline-none',
+                class: 'vpi-p-1 vpi-w-full vpi-min-w-md vpi-bg-transparent vpi-outline-none',
+                placeholder: this.placeholder,
                 onClick: (e: Event) => {
                     e.stopPropagation()
 
                 },
 
-                onFocus: (e:Event) => {
+                onFocus: (e: Event) => {
                     this.focused = true;
-                    this.$emit('focus',e)
+                    this.$emit('focus', e)
                 },
-                onBlur: (e:Event) => {
+                onBlur: (e: Event) => {
                     this.focused = false;
-                    this.$emit('blur',e)
-                
+                    this.$emit('blur', e)
+
                 },
                 onInput: (e: any) => {
 
 
-                    const phoneNumber = parsePhoneNumber(`+${this.selectedCountry?.callCode}${e.target.value}`)
-                    console.log('-------phoneNumber----------')
-                    console.log(phoneNumber)
-                    console.log('--------------------')
+                    const phoneNumber = asYoutType(`+${this.selectedCountry?.callCode}${e.target.value}`)??{
+                        number: `+${this.selectedCountry?.callCode}${e.target.value}`,
+                        nationalNumber: e.target.value,
+                        callingCode:this.selectedCountry?.callCode,
+                        isValid:()=> false,
+                       
+                    }
 
-
-                    this.$emit('update:modelValue', {
-                        number: phoneNumber?.number,
-                        nationalNumber: phoneNumber?.nationalNumber,
-                        callingCode: phoneNumber?.countryCallingCode,
-                        isValid: phoneNumber?.isValid(),
-                        isEqual: phoneNumber?.isEqual
-                    })
+                   if(phoneNumber){
+                       //@ts-ignore
+                    this.onInput(phoneNumber)
+                   }
 
 
                 },
-                // value: this.inputValue,
+
+                value: this.modelValue?.nationalNumber,
+            })
+        },
+        onInput(phoneNumber: IPhoneNumber | undefined) {
+            this.$emit('update:modelValue', {
+                number: phoneNumber?.number,
+                nationalNumber: phoneNumber?.nationalNumber,
+                callingCode: phoneNumber?.countryCallingCode,
+                isValid: phoneNumber?.isValid(),
+                isEqual: phoneNumber?.isEqual
             })
         },
         renderCaret() {
-            return h('svg', { height: 20, width: 20, viewBox: "0 0 32 32", class: "fill-current" }, h('path', { d: "M24 12L16 22 8 12z" }))
+            return h('svg', { height: 20, width: 20, viewBox: "0 0 32 32", class: "vpi-fill-current" }, h('path', { d: "M24 12L16 22 8 12z" }))
         }
     },
     render() {
-        return h('div', { class: [...this.wrapperClasses, this.showDropdown || this.focused ? 'border-2 border-blue-500' : ''] }, [this.renderDropdown(), this.renderInput()])
+        return h('div', { class: [...this.wrapperClasses, this.showDropdown || this.focused ? ' vpi-border-2 vpi-border-blue-500' : ''] }, [this.renderDropdown(), this.renderInput()])
     },
     created() {
         document.addEventListener('click', (e) => {
             this.showDropdown = this.$el.contains(e.target)
 
         })
-        fetch("http://ip-api.com/json").then(res => {
-            return res.json()
+        fetch("https://ip2c.org/s").then(res => {
+            return res.text()
         }).then(data => {
 
 
             this.selectedCountry = this.countries.find((country) => {
-                return data.countryCode === country.code;
+                return data.split(';')[1] === country.code;
             })
+        }).catch((e)=>{
+
         })
     },
     mounted() {

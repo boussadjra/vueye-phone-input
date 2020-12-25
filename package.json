@@ -8,7 +8,9 @@
     "build": "vue-cli-service build",
     "bundle": "vue-cli-service build --dest build --target lib --name vueye-phone-input ./src/components/VueyePhoneInput.ts",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "test:unit:watch": "vue-cli-service test:unit --watch",
+    "lint": "vue-cli-service lint",
+    "release": "release-it"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -34,11 +36,18 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "node-sass": "^4.12.0",
     "postcss": "^7.0.35",
+    "postcss-prefixer": "^2.1.2",
     "prettier": "^1.19.1",
+    "release-it": "^14.2.2",
     "sass-loader": "^8.0.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    }
   },
   "eslintConfig": {
     "root": true,

@@ -8,7 +8,7 @@
 }
 
 body{
-    @apply bg-gray-50 text-gray-500 h-full w-full;
+    @apply vpi-bg-gray-50 vpi-text-gray-500 vpi-h-full vpi-w-full;
     overflow-y: hidden;
 font-family: 'Inter',Arial, Helvetica, sans-serif;
 
@@ -26,6 +26,6 @@ font-family: 'Inter',Arial, Helvetica, sans-serif;
 }
 
 ::-webkit-scrollbar-thumb {
-   @apply bg-blue-700;
+   @apply vpi-bg-blue-700;
     border-radius: 5px;
 }
