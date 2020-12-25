@@ -4656,9 +4656,6 @@ var es_array_find = __webpack_require__("7db0");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
 var es_array_map = __webpack_require__("d81d");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
-var es_array_slice = __webpack_require__("fb6a");
-
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
 var es_function_name = __webpack_require__("b0c0");
 
@@ -4701,9 +4698,6 @@ var es_symbol_iterator = __webpack_require__("d28b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.from.js
 var es_array_from = __webpack_require__("a630");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
-var es_array_iterator = __webpack_require__("e260");
-
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
 var es_string_iterator = __webpack_require__("3ca3");
 
@@ -4718,10 +4712,12 @@ var web_dom_collections_iterator = __webpack_require__("ddb0");
 
 
 
-
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
+var es_array_slice = __webpack_require__("fb6a");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.to-string.js
 var es_regexp_to_string = __webpack_require__("25f0");
 
@@ -9216,7 +9212,6 @@ function exports_parsePhoneNumberFromString_parsePhoneNumberFromString() {
 
 
 
-
 /*** interfaces */
 
 var _countries = getCountries_getCountries();
@@ -9306,7 +9301,7 @@ var shapes = ['vpi-rounded-none', 'vpi-rounded', 'vpi-rounded-full'];
 
       return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["h"])('ul', {
         class: dropdownClasses
-      }, countries.slice(0, 20).map(function (country) {
+      }, countries.map(function (country) {
         return _this2.renderItem(country);
       }));
     },

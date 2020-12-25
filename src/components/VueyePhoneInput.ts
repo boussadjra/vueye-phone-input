@@ -107,7 +107,7 @@ export default defineComponent({
 
 
         renderItems() {
-            return h('ul', { class: dropdownClasses }, countries.slice(0, 20).map((country: ICountry) => this.renderItem(country)))
+            return h('ul', { class: dropdownClasses }, countries.map((country: ICountry) => this.renderItem(country)))
         },
 
 
