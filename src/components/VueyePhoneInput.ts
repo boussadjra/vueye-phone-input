@@ -107,7 +107,9 @@ export default defineComponent({
 
 
         renderItems() {
-            return h('ul', { class: dropdownClasses }, countries.slice(0, 20).map((country: ICountry) => this.renderItem(country)))
+            return h('ul', { class: dropdownClasses }, countries.filter((country: ICountry) => {
+                return country.callCode !== null
+            }).map((country: ICountry) => this.renderItem(country)))
         },
 
 
@@ -153,18 +155,18 @@ export default defineComponent({
                 onInput: (e: any) => {
 
 
-                    const phoneNumber = asYoutType(`+${this.selectedCountry?.callCode}${e.target.value}`)??{
+                    const phoneNumber = asYoutType(`+${this.selectedCountry?.callCode}${e.target.value}`) ?? {
                         number: `+${this.selectedCountry?.callCode}${e.target.value}`,
                         nationalNumber: e.target.value,
-                        callingCode:this.selectedCountry?.callCode,
-                        isValid:()=> false,
-                       
+                        callingCode: this.selectedCountry?.callCode,
+                        isValid: () => false,
+
                     }
 
-                   if(phoneNumber){
-                       //@ts-ignore
-                    this.onInput(phoneNumber)
-                   }
+                    if (phoneNumber) {
+                        //@ts-ignore
+                        this.onInput(phoneNumber)
+                    }
 
 
                 },
@@ -201,7 +203,7 @@ export default defineComponent({
             this.selectedCountry = this.countries.find((country) => {
                 return data.split(';')[1] === country.code;
             })
-        }).catch((e)=>{
+        }).catch((e) => {
 
         })
     },
