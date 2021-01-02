@@ -78,7 +78,8 @@
   "homepage": "https://boussadjra.github.io/vueye-phone-input/",
   "files": [
     "build/vueye-phone-input.common.js",
-    "package.json"
+    "package.json",
+    "*.md"
   ],
   "keywords": [
     "vue.js 3",
