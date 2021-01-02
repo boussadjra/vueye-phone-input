@@ -1,6 +1,6 @@
 {
   "name": "vueye-phone-input",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "main": "./build/vueye-phone-input.common.js",
   "scripts": {
