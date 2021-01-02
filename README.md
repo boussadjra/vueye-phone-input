@@ -13,7 +13,9 @@ It's a rich component that allows you to type a validate phone number, this comp
 ## DEMO 
 
 
-[LIVE DEMO]()
+[LIVE DEMO](https://boussadjra.github.io/vueye-phone-input/)
+
+[Boilerplate](https://codesandbox.io/s/vueye-phone-input-l91zs?file=/src/App.vue)
 
 
 ## Usage 
@@ -23,7 +25,7 @@ It's a rich component that allows you to type a validate phone number, this comp
   <div class="w-full h-full p-16">
     <label for="phone">
       <div class="py-2 text-gray-600">Your phone number :</div>
-      <vueye-phone-input v-model="phone" :outlined="true" id="phone" />
+      <vueye-phone-input v-model="phone" outlined id="phone" />
     </label>
 
     <div class="max-w-md py-8">
@@ -48,6 +50,7 @@ export default defineComponent({
       phone: {
         number: "",
         nationalNumber: "",
+        isValid:false
       },
     };
   },
