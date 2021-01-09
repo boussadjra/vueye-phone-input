@@ -3,7 +3,10 @@
    <div class="vpi-p-4 vpi-shadow-md vpi-max-w-md">
     <label for="#phone">
       <div class="vpi-py-2 vpi-text-gray-600">Your phone number :</div>
-      <vueye-phone-input placeholder="Insert phone number" v-model="phone" raised  id="phone"  />
+      <vueye-phone-input placeholder="Insert phone number" v-model="phone" raised  id="phone"  >
+
+
+      </vueye-phone-input>
     </label>
 
     <div class="vpi-max-w-md vpi-py-8">
@@ -28,9 +31,10 @@ export default defineComponent({
     return {
       status:'',
       phone: {
-        number: "",
-        nationalNumber: "",
-        isValid:false
+        number: "+9312345678",
+        nationalNumber: "12345678",
+        isValid:true,
+        callingCode:'93'
       },
     };
   },

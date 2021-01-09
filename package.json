@@ -1,6 +1,6 @@
 {
   "name": "vueye-phone-input",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "private": false,
   "main": "./build/vueye-phone-input.common.js",
   "scripts": {
@@ -78,7 +78,8 @@
   "homepage": "https://boussadjra.github.io/vueye-phone-input/",
   "files": [
     "build/vueye-phone-input.common.js",
-    "package.json"
+    "package.json",
+    "*.md"
   ],
   "keywords": [
     "vue.js 3",

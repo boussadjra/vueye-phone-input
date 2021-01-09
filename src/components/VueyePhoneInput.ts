@@ -1,4 +1,4 @@
-import { defineComponent, h, PropType } from "vue";
+import { defineComponent, h, PropType, Transition } from "vue";
 import './style.scss'
 import countries from './countries'
 import asYoutType, { getCountries, PhoneNumber } from 'libphonenumber-js'
@@ -102,7 +102,7 @@ export default defineComponent({
                     this.$emit('click-dropdown', e, this.showDropdown)
                 }
             }, [h('div', { class: ' ' }, [h('img',
-                { class: 'vpi-h-4 vpi-w-6 vpi-mr-2', src: this.selectedCountry?.flag }), this.showDropdown ? this.renderItems() : '']), this.renderCaret()])
+                { class: 'vpi-h-4 vpi-w-6 vpi-mr-2', src: this.selectedCountry?.flag }), this.showDropdown ? h(Transition, { name: 'slide' }, this.renderItems()) : '']), this.renderCaret()])
         },
 
 
@@ -127,7 +127,7 @@ export default defineComponent({
                     this.onInput(phoneNumber)
                 }
 
-            }, [h('img',
+            }, this.$slots.item?this.$slots.item(country):[h('img',
                 { class: 'vpi-h-4 vpi-w-6 vpi-mr-2', src: country.flag }),
             h('span', { class: 'vpi-px-2 vpi-mr-2 vpi-text-gray-600' }, `${country.name} (${country.nativeName}) `), `+${country.callCode}`])
         },
@@ -191,21 +191,39 @@ export default defineComponent({
         return h('div', { class: [...this.wrapperClasses, this.showDropdown || this.focused ? ' vpi-border-2 vpi-border-blue-500' : ''] }, [this.renderDropdown(), this.renderInput()])
     },
     created() {
+
+
+
         document.addEventListener('click', (e) => {
             this.showDropdown = this.$el.contains(e.target)
 
         })
-        fetch("https://ip2c.org/s").then(res => {
-            return res.text()
-        }).then(data => {
 
+        if (this.modelValue) {
+            let num: any;
+            if (this.modelValue.number) {
+                num = asYoutType(this.modelValue?.number.toString())
+            } else if (this.modelValue.nationalNumber && this.modelValue.countryCallingCode) {
+                num = asYoutType(this.modelValue.countryCallingCode + this.modelValue?.nationalNumber.toString())
 
+            }
             this.selectedCountry = this.countries.find((country) => {
-                return data.split(';')[1] === country.code;
+                return num?.country === country.code;
             })
-        }).catch((e) => {
+        }
+        else {
+            fetch("https://ip2c.org/s").then(res => {
+                return res.text()
+            }).then(data => {
 
-        })
+
+                this.selectedCountry = this.countries.find((country) => {
+                    return data.split(';')[1] === country.code;
+                })
+            }).catch((e) => {
+
+            })
+        }
     },
     mounted() {
 
