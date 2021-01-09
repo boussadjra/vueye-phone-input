@@ -65,12 +65,25 @@ export default defineComponent({
         }
     },
     watch: {
-        status(val) {
+        status() {
             if (!this.outlined) {
-                throw new Error("The status works only when the outlined prop is provided");
+                throw new Error("The status works only when the outlined prop is provided !");
 
             }
+        },
+        modelValue() {
+            let num: any;
+            if (this.modelValue?.number) {
+                num = asYoutType(this.modelValue?.number.toString())
+            } else if (this.modelValue?.nationalNumber && this.modelValue.countryCallingCode) {
+                num = asYoutType(this.modelValue.countryCallingCode + this.modelValue?.nationalNumber.toString())
+
+            }
+            this.selectedCountry = this.countries.find((country) => {
+                return num?.country === country.code;
+            })
         }
+
     },
     computed: {
         wrapperClasses(): Array<string> {
@@ -127,7 +140,7 @@ export default defineComponent({
                     this.onInput(phoneNumber)
                 }
 
-            }, this.$slots.item?this.$slots.item(country):[h('img',
+            }, this.$slots.item ? this.$slots.item(country) : [h('img',
                 { class: 'vpi-h-4 vpi-w-6 vpi-mr-2', src: country.flag }),
             h('span', { class: 'vpi-px-2 vpi-mr-2 vpi-text-gray-600' }, `${country.name} (${country.nativeName}) `), `+${country.callCode}`])
         },
@@ -191,8 +204,6 @@ export default defineComponent({
         return h('div', { class: [...this.wrapperClasses, this.showDropdown || this.focused ? ' vpi-border-2 vpi-border-blue-500' : ''] }, [this.renderDropdown(), this.renderInput()])
     },
     created() {
-
-
 
         document.addEventListener('click', (e) => {
             this.showDropdown = this.$el.contains(e.target)
